@@ -1,5 +1,6 @@
 package ht.fds.mbds.elanjery.tp0rev.jsf;
 
+import ht.fds.mbds.elanjery.tp0rev.service.GenerateurReponse;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.model.SelectItem;
@@ -21,6 +22,9 @@ public class Bb implements Serializable {
     private String question;
     private String reponse;
     private StringBuilder conversation = new StringBuilder();
+
+    @Inject
+    private GenerateurReponse generateurReponse;
 
     @Inject
     private FacesContext facesContext;
@@ -74,12 +78,14 @@ public class Bb implements Serializable {
             return null;
         }
 
+        // Le rôle n'est transmis que pour la première question du chat
+        String role = null;
         if (conversation.isEmpty()) {
             roleSystemeChangeable = false;
+            role = roleSysteme;
         }
 
-        // Traitement provisoire : sera délégué à GenerateurReponse à l'étape 6
-        reponse = "||" + question + "||";
+        reponse = generateurReponse.genererReponse(question, role);
 
         afficherConversation();
         return null;
