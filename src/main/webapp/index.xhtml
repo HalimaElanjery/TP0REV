@@ -16,6 +16,7 @@
         <h:panelGroup>
             <h:outputLabel for="role" value="Rôle de l'API : "/>
             <p:selectOneMenu id="role" value="#{bb.roleSysteme}" required="true"
+                             requiredMessage="Choisissez un rôle"
                              disabled="#{not bb.roleSystemeChangeable}">
                 <f:selectItem itemLabel="Choisir un rôle" itemValue="" noSelectionOption="true"/>
                 <f:selectItems value="#{bb.rolesSysteme}"/>
